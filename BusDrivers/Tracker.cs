@@ -13,7 +13,7 @@ namespace BusDrivers
             _drivers = drivers;
         }
 
-        public int Run()
+        public int Track()
         {
             ExchangeAll();
             var movesMade = 1;

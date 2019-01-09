@@ -29,7 +29,7 @@ namespace BusDriversTests
                 .WithDriver(driver3)
                 .Build();
 
-            var result = tracker.Run();
+            var result = tracker.Track();
 
             Assert.Equal(5, result);
         }
@@ -52,7 +52,7 @@ namespace BusDriversTests
                 .WithDriver(driver2)
                 .Build();
 
-            var result = tracker.Run();
+            var result = tracker.Track();
 
             Assert.Equal(-1, result);
         }
