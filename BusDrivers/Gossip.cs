@@ -1,19 +1,28 @@
+using System;
 using System.Collections.Generic;
 
 namespace BusDrivers
 {
     public class Gossip : ValueObject
     {
-        public string Text { get; }
+        private readonly string _text;
 
         public Gossip(string text)
         {
-            Text = text;
+            if (string.IsNullOrEmpty(text))
+            {
+                throw new ArgumentException(nameof(text));
+            }
+
+            _text = text;
         }
+
+        public static implicit operator string(Gossip gossip) =>
+            gossip._text;
 
         protected override IEnumerable<object> GetAtomicValues()
         {
-            yield return Text;
+            yield return _text;
         }
     }
 }

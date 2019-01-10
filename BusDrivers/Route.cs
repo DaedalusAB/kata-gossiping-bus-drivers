@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace BusDrivers
@@ -14,7 +15,7 @@ namespace BusDrivers
 
         public Route(int[] stops)
         {
-            _stops = stops;
+            _stops = stops ?? throw new ArgumentNullException(nameof(stops));
         }
 
         protected override IEnumerable<object> GetAtomicValues()

@@ -10,7 +10,7 @@ namespace BusDrivers
 
         public int CurrentStop =>
             _route[_currentStopIndex];
-        
+
         public int GossipCount =>
             _gossips.Count;
 
@@ -21,8 +21,7 @@ namespace BusDrivers
         {
             _route = route;
             _currentStopIndex = 0;
-            _gossips = new HashSet<Gossip>() { gossip };
-
+            _gossips = new HashSet<Gossip> { gossip };
         }
 
         public void ReceiveGossips(IEnumerable<BusDriver> otherDrivers)
