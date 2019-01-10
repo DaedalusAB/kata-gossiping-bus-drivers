@@ -22,11 +22,11 @@ namespace BusDrivers
 
         }
 
-        public void ReceiveGossips(IEnumerable<BusDriver> otherDriveresAtStop)
+        public void ReceiveGossips(IEnumerable<BusDriver> otherDrivers)
         {
-            foreach (var busDriver in otherDriveresAtStop)
+            foreach (var otherDriver in otherDrivers)
             {
-                ReceiveGossips(busDriver);
+                ReceiveGossips(otherDriver);
             }
         }
 

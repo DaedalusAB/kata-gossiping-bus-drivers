@@ -15,15 +15,15 @@ namespace BusDrivers
 
         public int Track()
         {
-            ExchangeAll();
-            var movesMade = 1;
+            var movesMade = 0;
 
-            while (!AllDriversHaveAllGossips() && movesMade <= MaxMoves)
+            do
             {
-                MoveAll();
                 ExchangeAll();
+                MoveAll();
                 movesMade++;
-            }
+
+            } while (!AllDriversHaveAllGossips() && movesMade <= MaxMoves);
 
             return movesMade > MaxMoves
                 ? -1
@@ -34,7 +34,10 @@ namespace BusDrivers
             _drivers.All(d => d.GossipCount == _drivers.Count);
 
         private void ExchangeAll() =>
-            _drivers.ForEach(busDriver => busDriver.ReceiveGossips(_drivers.Where(d => d.CurrentStop == busDriver.CurrentStop)));
+            _drivers.ForEach(d => d.ReceiveGossips(DriversAt(d.CurrentStop)));
+
+        private IEnumerable<BusDriver> DriversAt(int stopIndex) => 
+            _drivers.Where(d => d.CurrentStop == stopIndex);
 
         private void MoveAll() =>
             _drivers.ForEach(d => d.MoveToNextStop());
