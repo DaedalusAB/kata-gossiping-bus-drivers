@@ -20,14 +20,15 @@ namespace BusDriversTests
                 .WithGossip(gossip2)
                 .Build();
 
-            driver1.ExchangeGossip(driver2);
-            driver2.ExchangeGossip(driver1);
+            driver1.ReceiveGossips(new[] { driver2 });
+            driver2.ReceiveGossips(new[] { driver1 });
 
-            Assert.Contains(gossip1, driver1.Gossips);
-            Assert.Contains(gossip2, driver1.Gossips);
+            Assert.True(driver1.HasGossip(gossip1));
+            Assert.True(driver1.HasGossip(gossip2));
 
-            Assert.Contains(gossip1, driver2.Gossips);
-            Assert.Contains(gossip2, driver2.Gossips);
+            Assert.True(driver2.HasGossip(gossip1));
+            Assert.True(driver2.HasGossip(gossip2));
+
         }
     }
 }

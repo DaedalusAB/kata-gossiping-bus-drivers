@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BusDrivers
 {
@@ -7,32 +6,37 @@ namespace BusDrivers
     {
         private readonly Route _route;
         private int _currentStopIndex;
+        private readonly HashSet<Gossip> _gossips;
 
-        public HashSet<Gossip> Gossips { get; }
         public int CurrentStop =>
             _route[_currentStopIndex];
-
+        
+        public int GossipCount =>
+            _gossips.Count;
 
         public BusDriver(Route route, Gossip gossip)
         {
             _route = route;
             _currentStopIndex = 0;
-            Gossips = new HashSet<Gossip>() { gossip };
+            _gossips = new HashSet<Gossip>() { gossip };
 
         }
 
-        public void ExchangeGossip(BusDriver otherDriver) => 
-            Gossips.UnionWith(otherDriver.Gossips);
-
-        public void ExchangeGossipWithAll(IEnumerable<BusDriver> otherDriveresAtStop)
+        public void ReceiveGossips(IEnumerable<BusDriver> otherDriveresAtStop)
         {
             foreach (var busDriver in otherDriveresAtStop)
             {
-                ExchangeGossip(busDriver);
+                ReceiveGossips(busDriver);
             }
         }
 
-        public void MoveToNextStop() => 
-            _currentStopIndex = (_currentStopIndex + 1 + _route.Length) % _route.Length;
+        private void ReceiveGossips(BusDriver otherDriver) =>
+            _gossips.UnionWith(otherDriver._gossips);
+
+        public void MoveToNextStop() =>
+            _currentStopIndex = (_currentStopIndex + 1) % _route.Length;
+
+        public bool HasGossip(Gossip gossip) =>
+            _gossips.Contains(gossip);
     }
 }

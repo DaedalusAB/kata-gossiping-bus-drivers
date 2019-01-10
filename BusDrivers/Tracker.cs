@@ -30,13 +30,13 @@ namespace BusDrivers
                 : movesMade;
         }
 
-        private bool AllDriversHaveAllGossips() => 
-            _drivers.All(d => d.Gossips.Count == _drivers.Count);
+        private bool AllDriversHaveAllGossips() =>
+            _drivers.All(d => d.GossipCount == _drivers.Count);
 
-        private void ExchangeAll() => 
-            _drivers.ForEach(busDriver => busDriver.ExchangeGossipWithAll(_drivers.Where(d => d.CurrentStop == busDriver.CurrentStop)));
+        private void ExchangeAll() =>
+            _drivers.ForEach(busDriver => busDriver.ReceiveGossips(_drivers.Where(d => d.CurrentStop == busDriver.CurrentStop)));
 
-        private void MoveAll() => 
+        private void MoveAll() =>
             _drivers.ForEach(d => d.MoveToNextStop());
     }
 }
