@@ -10,7 +10,7 @@ namespace BusDrivers
 
         public HashSet<Gossip> Gossips { get; }
         public int CurrentStop =>
-            _route.GetStop(_currentStopIndex);
+            _route[_currentStopIndex];
 
 
         public BusDriver(Route route, Gossip gossip)

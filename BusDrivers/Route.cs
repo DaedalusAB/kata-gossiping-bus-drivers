@@ -6,6 +6,9 @@ namespace BusDrivers
     {
         private readonly int[] _stops;
 
+        public int this[int i] => 
+            _stops[i];
+
         public int Length =>
             _stops.Length;
 
@@ -13,9 +16,6 @@ namespace BusDrivers
         {
             _stops = stops;
         }
-
-        public int GetStop(int stopIndex) =>
-            _stops[stopIndex];
 
         protected override IEnumerable<object> GetAtomicValues()
         {
