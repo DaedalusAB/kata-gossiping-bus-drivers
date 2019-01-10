@@ -14,6 +14,9 @@ namespace BusDrivers
         public int GossipCount =>
             _gossips.Count;
 
+        public IEnumerable<Gossip> Gossips =>
+            _gossips;
+
         public BusDriver(Route route, Gossip gossip)
         {
             _route = route;

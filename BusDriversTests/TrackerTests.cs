@@ -56,5 +56,28 @@ namespace BusDriversTests
 
             Assert.Equal(-1, result);
         }
+
+        [Fact]
+        public void TwoDriversWithSameGossip()
+        {
+            var driver1 = new DriverBuilder()
+                .WithGossip(new Gossip("gossip 1"))
+                .WithRoute(new[] { 2, 1, 2 })
+                .Build();
+
+            var driver2 = new DriverBuilder()
+                .WithGossip(new Gossip("gossip 1"))
+                .WithRoute(new[] { 2, 1, 2 })
+                .Build();
+
+            var tracker = new TrackerBuilder()
+                .WithDriver(driver1)
+                .WithDriver(driver2)
+                .Build();
+
+            var result = tracker.Track();
+
+            Assert.Equal(1, result);
+        }
     }
 }

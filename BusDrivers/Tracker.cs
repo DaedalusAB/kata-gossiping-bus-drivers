@@ -6,32 +6,35 @@ namespace BusDrivers
     public class Tracker
     {
         private readonly List<BusDriver> _drivers;
-        private const int MaxMoves = 480;
+        private const int MaxMinutesToGossip = 480;
+        private readonly int _gossipCount;
+            
 
         public Tracker(List<BusDriver> drivers)
         {
             _drivers = drivers;
+            _gossipCount = _drivers.SelectMany(d => d.Gossips).ToList().Distinct().Count();
         }
 
         public int Track()
         {
-            var movesMade = 0;
+            var minutesPassed = 0;
 
             do
             {
                 ExchangeAll();
                 MoveAll();
-                movesMade++;
+                minutesPassed++;
 
-            } while (!AllDriversHaveAllGossips() && movesMade <= MaxMoves);
+            } while (!AllDriversHaveAllGossips() && minutesPassed <= MaxMinutesToGossip);
 
-            return movesMade > MaxMoves
+            return minutesPassed > MaxMinutesToGossip
                 ? -1
-                : movesMade;
+                : minutesPassed;
         }
 
         private bool AllDriversHaveAllGossips() =>
-            _drivers.All(d => d.GossipCount == _drivers.Count);
+            _drivers.All(d => d.GossipCount == _gossipCount);
 
         private void ExchangeAll() =>
             _drivers.ForEach(d => d.ReceiveGossips(DriversAt(d.CurrentStop)));
