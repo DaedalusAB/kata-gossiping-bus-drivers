@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace BusDrivers
@@ -19,7 +20,9 @@ namespace BusDrivers
 
         public BusDriver(Route route, Gossip gossip)
         {
-            _route = route;
+            if (gossip == null)
+                throw new ArgumentNullException(nameof(gossip));
+            _route = route ?? throw new ArgumentNullException(nameof(route));
             _currentStopIndex = 0;
             _gossips = new HashSet<Gossip> { gossip };
         }
